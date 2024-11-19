@@ -3,19 +3,15 @@
 <?php
 
 $cookieAmm = "";
+$dbUsers = $db->query("SELECT * FROM utenti");
+$dbUser = [];
+
 if(isset($_COOKIE["amministratore"])) {
 
-    $cookieAmm = $_COOKIE["amministratore"];
-    //echo $cookieAmm;
+  $cookieAmm = $_COOKIE["amministratore"];
+  //prendo il contenuto della tabella utenti
+  $dbUser = $dbUsers->fetch_assoc(); 
 }
-/*   
-$dbUsers = $db->query("SELECT * FROM utenti where token='$cookieAmm'");
-$dbUser = $dbUsers->fetch_assoc(); 
-*/
-//prendo il contenuto della tabella utenti
-//$dbUsers = $db->query("SELECT * FROM utenti where token='$cookieAmm'");
-$dbUsers = $db->query("SELECT * FROM utenti");
-$dbUser = $dbUsers->fetch_assoc(); 
 
 ?>
 

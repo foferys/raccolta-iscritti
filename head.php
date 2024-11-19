@@ -1,18 +1,26 @@
-<?php  /* error_reporting(E_ALL);
-    ini_set('display_errors', 1); */
-    include("database.php");
+<?php
+// Attiva la visualizzazione degli errori (opzionale per debugging)
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1); 
 
+// Includi il file per la connessione al database
+include("database.php");
 
-    // --- PROBLEMA CON LA CACHE SU HOST ONLINE - NON ESEGUE AGGIORNAMENTO COOKIE SE NON LA DISATTIVI --------
+// Disattiva la cache della pagina
+header("Cache-Control: no-cache, no-store, must-revalidate"); // Per HTTP 1.1
+header("Pragma: no-cache"); // Per HTTP 1.0
+header("Expires: 0"); // Per browser che non supportano Cache-Control
 
-    if(isset($_GET['logout'])) {
-        setcookie("amministratore", "", time() - 3600, "/"); // Scadenza retroattiva per eliminare il cookie
-        header("Cache-Control: no-cache, no-store, must-revalidate"); // Per HTTP 1.1
-        header("Pragma: no-cache"); // Per HTTP 1.0
-        header("Expires: 0"); // Per i browser che non supportano Cache-Control
-        header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
-        exit();
-    }
+// Gestione del logout
+if (isset($_GET['logout'])) {
+    // Elimina il cookie impostandolo con una scadenza retroattiva
+    setcookie("amministratore", "", time() - 3600, "/");
+    
+    // Rimuove il parametro "logout" dall'URL e ricarica la pagina
+    header("Location: " . strtok($_SERVER["REQUEST_URI"], '?') . '?nocache=' . time());
+    exit();
+}
+
  
 ?>
 

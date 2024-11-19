@@ -7,7 +7,10 @@
 
     if(isset($_GET['logout'])) {
         setcookie("amministratore", "", time() - 3600, "/"); // Scadenza retroattiva per eliminare il cookie
-        header("Location: ./"); // Reindirizza alla home dopo il logout
+        header("Cache-Control: no-cache, no-store, must-revalidate"); // Per HTTP 1.1
+        header("Pragma: no-cache"); // Per HTTP 1.0
+        header("Expires: 0"); // Per i browser che non supportano Cache-Control
+        header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
         exit();
     }
  

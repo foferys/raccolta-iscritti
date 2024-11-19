@@ -43,6 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 // Imposta il cookie
                 setcookie("amministratore", $token, time() + 60 * 60 * 24 * 30, "/");
 
+                // Aggiungi intestazioni per evitare la cache
+                header("Cache-Control: no-cache, no-store, must-revalidate"); // Per HTTP 1.1
+                header("Pragma: no-cache"); // Per HTTP 1.0
+                header("Expires: 0"); // Per i browser che non supportano Cache-Control
+
                 // Reindirizza alla home con un parametro di cache-busting
                 header("Location: ./?cb=" . time());
                 exit();
